@@ -1,3 +1,4 @@
 <!-- (submitted) is the event emitter from child component class -->
 <app-search-bar (submitted)="onTerm($event)"></app-search-bar>
-<app-page-list></app-page-list>
+<!-- pages props from http request will be passed down to child component -->
+<app-page-list [pages]="pages"></app-page-list>
