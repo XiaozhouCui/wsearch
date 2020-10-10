@@ -12,8 +12,10 @@ export class AppComponent {
   constructor(private wikipedia: WikipediaService) {}
 
   onTerm(term: string) {
-    this.wikipedia.search(term).subscribe((response: any) => {
-      this.pages = response.query.search;
+    // wikipedia.search(term) catches the value (pages) emitted from RxJs Observable's pipeline/operators
+    // "pages" already got the type from interface <WikipediaResponse>
+    this.wikipedia.search(term).subscribe((pages) => {
+      this.pages = pages;
     });
   }
 }
