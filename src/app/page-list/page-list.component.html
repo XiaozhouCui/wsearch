@@ -1,3 +1,6 @@
+<!-- Angular's [innerHTML] will auto remove JS from innerhtml elements, malicious JS in below xss won't work -->
+<div [innerHTML]="xss"></div>
+
 <table class="table is-striped">
   <thead>
     <tr>
@@ -8,9 +11,17 @@
   </thead>
   <tbody>
     <tr *ngFor="let page of pages">
-      <td>{{ page.title }}</td>
+      <td>
+        <a
+          target="_blank"
+          [href]="'https://en.wikipedia.org?curid=' + page.pageid"
+          >{{ page.title }}</a
+        >
+      </td>
       <td>{{ page.wordcount }}</td>
-      <td>{{ page.snippet }}</td>
+      <!-- <td>{{ page.snippet }}</td> this will show html tags as text to prevent Cross Site Scripting (XSS) -->
+      <td [innerHTML]="page.snippet"></td>
+      <!-- Angular's [innerHTML] will auto remove malicious JS from innerhtml elements -->
     </tr>
   </tbody>
 </table>
